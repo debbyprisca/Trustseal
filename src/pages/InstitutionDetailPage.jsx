@@ -187,21 +187,7 @@ const InstitutionDetailPage = () => {
             required
           />
         </div>
-        <div className="flex-1">
-          <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="harsh">
-            Hash
-          </label>
-          <input
-            id="hash"
-            name="hash"
-            type="text"
-            value=""
-            onChange=""
-            className="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter hash"
-            required
-          />
-        </div>
+   
         <div className="flex-1">
           <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="review">
             Review
