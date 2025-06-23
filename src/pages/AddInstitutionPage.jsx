@@ -2,19 +2,20 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { TrustSealContract, Address} from './TrustSealContractABI.jsx'
+
 
 import {ethers} from "ethers";
+import { WebSocketProvider } from 'ethers';
 
 const AddInstitutionPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
-    address:'',
+    description:'',
     location: '',
-    imageUrl: '',
-    description: '',
-    instAddress: ''
+    website: '',
+    img: '',
+    
   });
 
   const handleChange = (e) => {
@@ -54,6 +55,25 @@ const AddInstitutionPage = () => {
       
         <input
           type="text"
+          name="description"
+          placeholder="Description"
+          value={form.description}
+          onChange={handleChange}
+          required
+          className="input w-full"
+        />
+        <input
+          type="url"
+          name="category"
+          placeholder="Category"
+          value={form.category}
+          onChange={handleChange}
+          required
+          className="input w-full"
+        />
+
+        <input
+          type="text"
           name="location"
           placeholder="Location"
           value={form.location}
@@ -62,29 +82,10 @@ const AddInstitutionPage = () => {
           className="input w-full"
         />
         <input
-          type="url"
-          name="imageUrl"
-          placeholder="Image URL"
-          value={form.imageUrl}
-          onChange={handleChange}
-          required
-          className="input w-full"
-        />
-
-        <input
           type="text"
-          name="category"
-          placeholder="Category"
-          value={form.category}
-          onChange={handleChange}
-          required
-          className="input w-full"
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={form.description}
+          name="website"
+          placeholder="Website"
+          value={form.website}
           onChange={handleChange}
           required
           className="input w-full"
@@ -92,9 +93,9 @@ const AddInstitutionPage = () => {
   
         <input
           type="text"
-          name="instAddress"
-          placeholder="instAddress"
-          value={form.instAddress}
+          name="img "
+          placeholder="Img"
+          value={form.img}
           onChange={handleChange}
           required
           className="input w-full"
