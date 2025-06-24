@@ -7,8 +7,8 @@ const HomePage = () => {
   const { isAuthenticated } = useAuth();
 
   const handleExplore = () => {
-    // navigate('/institutions');
-    navigate('/AddInstitutionPage');
+    navigate('/institutions');
+    // navigate('/AddInstitutionPage');
   };
 
   return (
@@ -32,7 +32,7 @@ const HomePage = () => {
                 >
                   Explore Institutions
                 </button>
-                {!isAuthenticated && (
+                {isAuthenticated && (
                <button
   onClick={() => navigate('/add-institution')}
   className="btn border border-primary-300 text-white hover:bg-primary-700 focus:ring-white"
