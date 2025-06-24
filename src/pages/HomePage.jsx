@@ -5,11 +5,12 @@ import { useAuth } from '../context/AuthContext';
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  
+
   const handleExplore = () => {
-    navigate('/institutions');
+    // navigate('/institutions');
+    navigate('/AddInstitutionPage');
   };
-  
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -25,7 +26,7 @@ const HomePage = () => {
                 Discover and share authentic experiences with Trust Seal's blockchain-powered review platform.
               </p>
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                <button 
+                <button
                   onClick={handleExplore}
                   className="btn bg-white text-primary-800 hover:bg-gray-100 focus:ring-white"
                 >
@@ -86,7 +87,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Trust Indicators */}
       <section className="py-12 bg-white">
         <div className="container-custom">
@@ -96,7 +97,7 @@ const HomePage = () => {
               Our blockchain technology ensures reviews are verified, transparent, and tamper-proof.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 transition-all duration-300 hover:shadow-md">
               <div className="bg-primary-100 w-12 h-12 flex items-center justify-center rounded-full mb-4">
@@ -107,7 +108,7 @@ const HomePage = () => {
                 All reviews are signed as attestations with blockchain wallets, ensuring authenticity and trust.
               </p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 transition-all duration-300 hover:shadow-md">
               <div className="bg-secondary-100 w-12 h-12 flex items-center justify-center rounded-full mb-4">
                 <CheckCircle className="w-6 h-6 text-secondary-600" />
@@ -117,7 +118,7 @@ const HomePage = () => {
                 Once published, reviews cannot be altered or deleted, maintaining integrity and transparency.
               </p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 transition-all duration-300 hover:shadow-md">
               <div className="bg-accent-100 w-12 h-12 flex items-center justify-center rounded-full mb-4">
                 <TrendingUp className="w-6 h-6 text-accent-600" />
@@ -130,13 +131,13 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Featured Institutions */}
       <section className="py-12 bg-gray-50">
         <div className="container-custom">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Top Rated Institutions</h2>
-            <button 
+            <button
               onClick={handleExplore}
               className="text-primary-600 hover:text-primary-700 font-medium flex items-center text-sm"
             >
@@ -146,16 +147,16 @@ const HomePage = () => {
               </svg>
             </button>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredInstitutions.map((institution) => (
-              <div 
-                key={institution.id} 
+              <div
+                key={institution.id}
                 className="card group"
                 onClick={() => navigate(`/institutions/${institution.id}`)}
               >
-                <div 
-                  className="h-40 bg-cover bg-center" 
+                <div
+                  className="h-40 bg-cover bg-center"
                   style={{ backgroundImage: `url(${institution.imageUrl})` }}
                 >
                   <div className="h-full w-full bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
@@ -167,8 +168,8 @@ const HomePage = () => {
                   <div className="flex items-center mb-3">
                     <div className="flex mr-2">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star 
-                          key={i} 
+                        <Star
+                          key={i}
                           className={`w-4 h-4 ${i < Math.floor(institution.rating) ? 'text-accent-500' : 'text-gray-300'}`}
                           fill={i < Math.floor(institution.rating) ? '#F59E0B' : 'none'}
                         />
@@ -199,7 +200,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-secondary-800 to-primary-800 text-white">
         <div className="container-custom text-center">
