@@ -9,7 +9,7 @@ const HomePage = () => {
   const handleExplore = () => {
 
    navigate('/institutions');
-  /*navigate('/AddInstitutionPage');*/
+  navigate('/AddInstitutionPage');
   };
   
   return (
@@ -27,21 +27,16 @@ const HomePage = () => {
                 Discover and share authentic experiences with Trust Seal's blockchain-powered review platform.
               </p>
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                <button 
-                  onClick={handleExplore}
-                  className="btn bg-white text-primary-800 hover:bg-gray-100 focus:ring-white"
-                >
-                  Explore Institutions
-                </button>
-                {!isAuthenticated && (
+               
                <button
   onClick={() => navigate('/add-institution')}
-  className="btn border border-primary-300 text-white hover:bg-primary-700 focus:ring-white"
+  /*className="btn border border-primary-300 text-white hover:bg-primary-700 focus:ring-white"*/
+    className="btn bg-white text-primary-800 hover:bg-gray-100 focus:ring-white"
 >
   Add Institution
 </button>
-
-                )}
+{!isAuthenticated}
+                
               </div>
             </div>
             <div className="hidden md:block">

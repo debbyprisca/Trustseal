@@ -46,7 +46,7 @@ const AddInstitutionPage = () => {
         <input
           type="text"
           name="name"
-          placeholder="Institution Name"
+          placeholder="Name"
           value={form.name}
           onChange={handleChange}
           required
