@@ -46,7 +46,7 @@ console.log(isAuthenticated)
 
       <div className={`flex gap-3 items-center`}>
         {/* created space in header */}
-    <p style = {{display: isConnected ? 'flex' : 'none'}}>{Active?.slice(0, 6)}...{Active?.slice(-4)}</p>
+    <p style = {{display: isConnected ? 'flex' : 'none'}}>{Active?.slice(0, 7)}...{Active?.slice(-4)}</p>
     <button
     id="Connect"
     onClick={handleConnect}
