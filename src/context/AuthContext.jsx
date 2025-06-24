@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 // Create context with default values
 const AuthContext = createContext({
   user: null,
-  isAuthenticated: false,
+  isAuthenticated:false,
   isLoading: false,
   login: async () => {},
   logout: () => {},

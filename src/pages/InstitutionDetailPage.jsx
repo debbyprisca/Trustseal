@@ -391,18 +391,7 @@ const InstitutionDetailPage = () => {
                 </div>
               </div>
               
-              <div className="border-t border-gray-100 pt-6 mb-6">
-                <h3 className="text-lg font-semibold mb-4">Verification Status</h3>
-                <div className="bg-success-50 rounded-lg p-4 flex items-start">
-                  <Shield className="w-5 h-5 text-success-700 mr-3 mt-0.5" />
-                  <div>
-                    <p className="text-success-700 font-medium">Verified Business</p>
-                    <p className="text-sm text-success-700 opacity-80">
-                      This institution has verified their identity and credentials through our blockchain verification process.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              
               
               {/* <button
                 onClick={() => navigate(`/write-review/${id}`)}
