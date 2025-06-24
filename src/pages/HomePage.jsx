@@ -7,8 +7,9 @@ const HomePage = () => {
   const { isAuthenticated } = useAuth();
   
   const handleExplore = () => {
+
    navigate('/institutions');
-     navigate('/AddInstitutionPage');
+  /*navigate('/AddInstitutionPage');*/
   };
   
   return (
