@@ -129,7 +129,7 @@ const HomePage = () => {
       </section>
       
       {/* Featured Institutions */}
-      <section className="py-12 bg-gray-50">
+    {/* <section className="py-12 bg-gray-50">
         <div className="container-custom">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Top Rated Institutions</h2>
@@ -195,7 +195,7 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
       
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-secondary-800 to-primary-800 text-white">
