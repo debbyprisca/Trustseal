@@ -1,18 +1,20 @@
-import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { Shield, Menu, X, Search, LogIn, BarChart3 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import WalletButton from '../auth/WalletButton';
+"use client"
+
+import { useState } from "react"
+import { NavLink, useLocation } from "react-router-dom"
+import { Shield, Menu, X, Search, BarChart3 } from "lucide-react"
+import { useAuth } from "../../context/AuthContext"
+import WalletButton from "../auth/WalletButton"
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, user } = useAuth();
-  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { isAuthenticated, user } = useAuth()
+  const location = useLocation()
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const closeMenu = () => setIsMenuOpen(false)
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname === path
   console.log("isAuthenticated....", isAuthenticated)
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -26,20 +28,28 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <NavLink to="/"
-              className = "text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
+            <NavLink
+              to="/"
+              className="text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
             >
               Home
             </NavLink>
-            <NavLink  to="/institutions"
-              className = "text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
+            <NavLink
+              to="/institutions"
+              className="text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
             >
               Institutions
+            </NavLink>
+            <NavLink
+              to="/add-institution"
+              className="text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
+            >
+              Add Institution
             </NavLink>
             {isAuthenticated && (
               <NavLink
                 to="/analytics"
-                className = "text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
+                className="text-sm font-medium transition-colors duration-200 text-gray-700 hover:text-primary-600"
               >
                 <div className="flex items-center">
                   <BarChart3 className="w-4 h-4 mr-1" />
@@ -65,7 +75,7 @@ const Header = () => {
                 className="flex items-center space-x-2 hover:opacity-90 transition-opacity"
               >
                 <img
-                  src={user?.avatarUrl}
+                  src={user?.avatarUrl || "/placeholder.svg"}
                   alt="Profile"
                   className="w-8 h-8 rounded-full object-cover border-2 border-primary-100"
                 />
@@ -73,8 +83,8 @@ const Header = () => {
               </NavLink>
             ) : (null)
             } */}
-              <WalletButton />
-           </div>
+            <WalletButton />
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -82,11 +92,7 @@ const Header = () => {
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-gray-700" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-700" />
-            )}
+            {isMenuOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
           </button>
         </div>
       </div>
@@ -106,17 +112,24 @@ const Header = () => {
             <nav className="flex flex-col space-y-3">
               <NavLink
                 to="/"
-                className='text-sm font-medium py-2 transition-colors duration-200 text-gray-700'
+                className="text-sm font-medium py-2 transition-colors duration-200 text-gray-700"
                 onClick={closeMenu}
               >
                 Home
               </NavLink>
               <NavLink
                 to="/institutions"
-                className='text-sm font-medium py-2 transition-colors duration-200 text-gray-700'
+                className="text-sm font-medium py-2 transition-colors duration-200 text-gray-700"
                 onClick={closeMenu}
               >
                 Institutions
+              </NavLink>
+              <NavLink
+                to="/add-institution"
+                className="text-sm font-medium py-2 transition-colors duration-200 text-gray-700"
+                onClick={closeMenu}
+              >
+                Add Institution
               </NavLink>
               {isAuthenticated && (
                 <>
@@ -132,7 +145,7 @@ const Header = () => {
                   </NavLink> */}
                   <NavLink
                     to="/profile"
-                    className='text-sm font-medium py-2 transition-colors duration-200 text-gray-700'
+                    className="text-sm font-medium py-2 transition-colors duration-200 text-gray-700"
                     onClick={closeMenu}
                   >
                     My Profile
@@ -149,7 +162,8 @@ const Header = () => {
         </div>
       )}
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
+
