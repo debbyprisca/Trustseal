@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Star, CheckCircle, Globe, Building, MapPin, SlidersHorizontal } from 'lucide-react';
+import {ethers, BrowserProvider} from 'ethers'
+import { sepoliaAddress } from './TrustSealConfig';
+import { TrustSealABI1 } from './trustsealconfig1';
+import {newABI,newAddress} from './NewConfigsIDnAddress'
+import {createPublicClient,http} from 'viem'
+import {baseSepolia,sepolia} from 'viem/chains'
+
+const TrustSealPublic = createPublicClient({
+  chain:sepolia,
+  transport:http()
+})
 
 const InstitutionsPage = () => {
   const navigate = useNavigate();
@@ -8,19 +19,64 @@ const InstitutionsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedRating, setSelectedRating] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [myInstitutions,setMyInstitutions] = useState([]);
   
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
   
-  const filteredInstitutions = institutions.filter((institution) => {
-    const matchesSearch = institution.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         institution.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || institution.category === selectedCategory;
-    const matchesRating = selectedRating === 0 || institution.rating >= selectedRating;
+  const filteredInstitutions = myInstitutions.filter((institution) => {
+    const matchesSearch = institution[0].Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         institution[0].Location.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || institution[0].Category === selectedCategory;
+  
     
-    return matchesSearch && matchesCategory && matchesRating;
+    return matchesSearch && matchesCategory;
   });
+
+  useEffect(()=>{
+
+    const idFetch = async () => {
+      let localArray = [] 
+      const Provider = new BrowserProvider(window.ethereum)
+      const Signer = Provider.getSigner() 
+
+      const Data = await TrustSealPublic.readContract({
+        address:newAddress,
+        abi:newABI,
+        functionName:"getInstitutionIds",
+      })
+
+      console.log('The Ids:',Data)
+
+      // let _institution;
+
+      for(let c = 0; c < Data.length; c++){
+        let id = Number(Data[c])
+       const _institution = await TrustSealPublic.readContract({
+          address:newAddress,
+          abi:newABI,
+         functionName:"getInstitutions",
+         args:[id]
+       })
+      localArray.push(_institution)
+      console.log('The institiuton:',_institution)
+    }
+
+    setMyInstitutions(localArray)
+
+    console.log("The state var", myInstitutions)
+
+    }
+
+    idFetch()
+
+      
+
+
+  },[])
+
+
   
   return (
     <div className="bg-gray-50 py-8">
@@ -127,24 +183,24 @@ const InstitutionsPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredInstitutions.map((institution) => (
             <div 
-              key={institution.id} 
+              key={institution[1]} 
               className="card group cursor-pointer"
-              onClick={() => navigate(`/institutions/${institution.id}`)}
+              onClick={() => navigate(`/institutions/${institution[1]}`)}
             >
               <div 
                 className="h-48 bg-cover bg-center relative" 
-                style={{ backgroundImage: `url(${institution.imageUrl})` }}
+                style={{ backgroundImage: `url(${institution[0].Img})` }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
                 <div className="absolute bottom-4 left-4">
-                  <span className={`badge ${getCategoryBadgeClass(institution.category)}`}>
-                    {getCategoryDisplayName(institution.category)}
+                  <span className={`badge ${getCategoryBadgeClass(institution[0].Category)}`}>
+                    {getCategoryDisplayName(institution[0].Category)}
                   </span>
                 </div>
               </div>
               <div className="p-5">
                 <h3 className="text-xl font-semibold mb-2 group-hover:text-primary-600 transition-colors">
-                  {institution.name}
+                  {institution.Name}
                 </h3>
                 <div className="flex items-center space-x-2 mb-3">
                   <div className="flex">
@@ -156,21 +212,21 @@ const InstitutionsPage = () => {
                       />
                     ))}
                   </div>
-                  <span className="text-gray-600 text-sm">
+                  {/*<span className="text-gray-600 text-sm">
                     {institution.rating.toFixed(1)} ({institution.reviewCount} reviews)
-                  </span>
+                  </span>*/}
                 </div>
                 <div className="flex items-center text-gray-500 text-sm mb-4">
                   <MapPin className="w-4 h-4 mr-1" />
-                  {institution.location}
+                  {institution[0].Location}
                 </div>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {institution.description}
+                  {institution[0].Description}
                 </p>
                 <div className="flex items-center justify-between">
                   <div className="verified-badge">
                     <CheckCircle className="w-3 h-3" />
-                    <span className="text-xs">Verified Profile</span>
+                    <a href={`https://sepolia.basescan.org/address/${institution[0].institutionOwner}`} target="_blank"><span className="text-xs">{institution[0].institutionOwner.substring(0,5)}...{institution[0].institutionOwner.substring(institution[0].institutionOwner.length - 4)}</span></a>
                   </div>
                  
                 </div>

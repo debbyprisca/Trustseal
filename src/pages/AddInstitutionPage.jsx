@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {ContractAddress,sepoliaAddress} from './TrustSealConfig'
+import {TrustSealABI1} from './trustsealconfig1'
 
 
 import {ethers} from "ethers";
 import { WebSocketProvider } from 'ethers';
+import { newABI, newAddress } from './NewConfigsIDnAddress';
 
 const AddInstitutionPage = () => {
   const navigate = useNavigate();
@@ -28,8 +31,8 @@ const AddInstitutionPage = () => {
     const Provider = new ethers.BrowserProvider(window.ethereum)
     const Signer = await Provider.getSigner()
 
-    const addInstitution = new ethers.Contract(Address,TrustSealContract,Signer )
-    const tx = await addInstitution.registerInstitution(form.name,form.address,form.location,form.imageUrl,form.tags,form.instAddress)
+    const addInstitution = new ethers.Contract(newAddress,newABI,Signer)
+    const tx = await addInstitution.registerInstitution(form.name,form.description,form.category,form.location,form.website,form.img)
     const receipt =  await tx.wait();
     const Hash = receipt.hash
 
@@ -93,11 +96,11 @@ const AddInstitutionPage = () => {
   
         <input
           type="text"
-          name="img "
+          name="img"
           placeholder="Img"
           value={form.img}
           onChange={handleChange}
-          required
+          // required
           className="input w-full"
         />
       

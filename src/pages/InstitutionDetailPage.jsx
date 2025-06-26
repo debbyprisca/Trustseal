@@ -16,8 +16,15 @@ import {
   User
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { BrowserProvider, ethers } from 'ethers';
+import { createPublicClient,http } from 'viem';
+import {sepolia} from 'viem/chains'
+import { newAddress,newABI } from './NewConfigsIDnAddress';
 
-
+const TrustSealPublic = createPublicClient({
+  chain:sepolia,
+  transport:http()
+})
 
 const InstitutionDetailPage = () => {
   const { id } = useParams();
@@ -27,13 +34,53 @@ const InstitutionDetailPage = () => {
   const [institution, setInstitution] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [myInstitutions,setMyInstitutions] = useState([]);
+
+
+  useEffect(()=>{
   
+      const idFetch = async () => {
+        let localArray = [] 
+        const Provider = new BrowserProvider(window.ethereum)
+        const Signer = Provider.getSigner() 
+  
+        const Data = await TrustSealPublic.readContract({
+          address:newAddress,
+          abi:newABI,
+          functionName:"getInstitutionIds",
+        })
+  
+        console.log('The Ids:',Data)
+  
+        // let _institution;
+  
+        for(let c = 0; c < Data.length; c++){
+          let id = Number(Data[c])
+         const _institution = await TrustSealPublic.readContract({
+            address:newAddress,
+            abi:newABI,
+           functionName:"getInstitutions",
+           args:[id]
+         })
+        localArray.push(_institution)
+        console.log('The institiuton:',_institution)
+      }
+  
+      setMyInstitutions(localArray)
+  
+      console.log("The state var", myInstitutions)
+  }
+      idFetch()
+  
+    },[])
+  
+
   useEffect(() => {
     // Simulate data fetching
     const fetchData = async () => {
       // In a real app, this would be API calls to get institution and reviews
       setTimeout(() => {
-        const foundInstitution = institutions.find(inst => inst.id === id);
+        const foundInstitution = myInstitutions.find(inst => Number(inst[1]) === id);
         if (foundInstitution) {
           setInstitution(foundInstitution);
           setReviews(institutionReviews);
@@ -73,25 +120,25 @@ const InstitutionDetailPage = () => {
       {/* Hero Section */}
       <div 
         className="h-64 md:h-80 bg-cover bg-center relative"
-        style={{ backgroundImage: `url(${institution.imageUrl})` }}
+        style={{ backgroundImage: `url(${institution[0].Img})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
           <div className="container-custom">
             <div className="max-w-4xl">
               <div className="flex items-center space-x-2 mb-2">
-                <span className={`badge ${getCategoryBadgeClass(institution.category)}`}>
-                  {institution.category}
+                <span className={`badge ${getCategoryBadgeClass(institution[0].Category)}`}>
+                  {institution[0].Category}
                 </span>
                 <div className="verified-badge text-white">
                   <CheckCircle className="w-3 h-3" />
                   <span className="text-xs">Verified</span>
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">{institution.name}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">{institution[0].Name}</h1>
               <div className="flex items-center flex-wrap space-x-4">
                 <div className="flex items-center">
-                  <div className="flex mr-2">
+                  {/* <div className="flex mr-2">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star 
                         key={i} 
@@ -99,14 +146,14 @@ const InstitutionDetailPage = () => {
                         fill={i < Math.floor(institution.rating) ? '#F59E0B' : 'none'}
                       />
                     ))}
-                  </div>
-                  <span className="text-gray-200">
+                  </div> */}
+                  {/* <span className="text-gray-200">
                     {institution.rating.toFixed(1)} ({institution.reviewCount} reviews)
-                  </span>
+                  </span> */}
                 </div>
                 <div className="flex items-center mt-2 md:mt-0">
                   <MapPin className="w-4 h-4 mr-1" />
-                  <span>{institution.location}</span>
+                  <span>{institution[0].Location}</span>
                 </div>
               </div>
             </div>
@@ -284,7 +331,7 @@ const InstitutionDetailPage = () => {
                     <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-gray-700 mb-2">No reviews yet</h3>
                     <p className="text-gray-500 mb-6">
-                      Be the first to leave a review for {institution.name}.
+                      Be the first to leave a review for {institution[0].Name}.
                     </p>
                    <span className="text-lg font-semibold text-primary-600">
                         Write a Review

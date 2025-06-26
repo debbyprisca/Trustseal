@@ -20,7 +20,7 @@ console.log(isAuthenticated)
   const handleConnect = async () => {
     try {
       if(window.ethereum){
-        console.log("Inattempting to connect")
+        console.log("Attempting to connect")
         const Accounts = await window.ethereum.request({method:'eth_requestAccounts'})
           console.log(Accounts)
         setActive(Accounts[0])

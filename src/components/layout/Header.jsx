@@ -59,7 +59,7 @@ const Header = () => {
 
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center space-x-4">
-            {isAuthenticated ? (
+            {/* {isAuthenticated ? (
               <NavLink
                 to="/profile"
                 className="flex items-center space-x-2 hover:opacity-90 transition-opacity"
@@ -72,7 +72,7 @@ const Header = () => {
                 <span className="font-medium text-sm">{user?.username}</span>
               </NavLink>
             ) : (null)
-            }
+            } */}
               <WalletButton />
            </div>
 
@@ -120,7 +120,7 @@ const Header = () => {
               </NavLink>
               {isAuthenticated && (
                 <>
-                  <NavLink
+                  {/* <NavLink
                     to="/analytics"
                     className='text-sm font-medium py-2 transition-colors duration-200 text-gray-700'
                     onClick={closeMenu}
@@ -129,7 +129,7 @@ const Header = () => {
                       <BarChart3 className="w-4 h-4 mr-1" />
                       Analytics
                     </div>
-                  </NavLink>
+                  </NavLink> */}
                   <NavLink
                     to="/profile"
                     className='text-sm font-medium py-2 transition-colors duration-200 text-gray-700'

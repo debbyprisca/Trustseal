@@ -1,4 +1,5 @@
-export const ContractAddress="0xF9CeD3cFC47c0D6Fb40F1B6C7A3b26bB58Fe2516"
+export const ContractAddress="0x80037d300bA4Da75c559F9F8bA7Dd50D3A51A691"
+export const sepoliaAddress = '0x9e80243C7e1D09e951f3Eacea297D6F07A51CE79'
 export const TrustSealABI=[
 	{
 		"inputs": [
