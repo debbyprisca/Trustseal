@@ -1,5 +1,7 @@
 export const ContractAddress="0x80037d300bA4Da75c559F9F8bA7Dd50D3A51A691"
 export const sepoliaAddress = '0x9e80243C7e1D09e951f3Eacea297D6F07A51CE79'
+export const BaseMainnetAddress='0xFb6f734b15cdEDaD8A329940bADEe737e135495A'
+
 export const TrustSealABI=[
 	{
 		"inputs": [
